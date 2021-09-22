@@ -1,38 +1,87 @@
-.App {
+.turn{
   text-align: center;
+  margin: 20px;
+  font-size: 25px;
+  font-weight: 600;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.box{
+  display: grid;
+  grid-template-columns: repeat(3, 170px);
+  grid-template-rows: repeat(3, 170px);
+  gap: 15px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.box_cell{
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  font-size: 150px;
+  /* line-height: 0px; */
+  border: 3px solid #000;
+  border-radius: 10px;
+  transition-property: background-color, display;
+  transition-duration: 0.2s;
 }
-
-.App-link {
-  color: #61dafb;
+.box_cell p{
+  animation: add 0.5s;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@keyframes add{
+  0%{
+    transform: scale(0);
   }
-  to {
-    transform: rotate(360deg);
+  100%{
+    transform: scale(1);
   }
+}
+.box_cell:hover{
+  cursor: pointer;
+  background-color: rgb(224, 224, 224);
+}
+.btn_restart{
+  width: 150px;
+  height: 50px;
+  margin:  20px auto 0 auto;
+  background-color: rgb(88, 88, 88);
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+  line-height: 50px;
+  font-size: 40px;
+  transition-property: transform,box-shadow ;
+  transition-duration: 0.15s;
+  
+}
+.btn_restart:hover{
+  transform: scale(1.03);
+  cursor: pointer;
+  box-shadow: 0 0 9px #555;
+}
+.btn_restart:active{
+  transform: scale(0.95);
+}
+.winScrin{
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  background-color: rgba(56, 56, 56, 0.5);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:  background-color 10s;
+}
+.win__box{
+  animation: add 0.5s;
+  width: 400px;
+  height: 200px;
+  background-color: #fff;
+  border: 2px solid #555;
+  border-radius: 25px;
+}
+.win__box p{
+  text-align: center;
+  font-size: 25px;
+  font-weight: 600;
+  padding-top: 15px;
 }
