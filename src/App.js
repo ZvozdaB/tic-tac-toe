@@ -2,81 +2,27 @@ import { useState } from "react";
 import './App.css';
 import BoxCeill from "./tic-tac/BoxCaill";
 import WinScrin from "./tic-tac/WinScrin";
+import { useSelector, useDispatch } from 'react-redux'
+import { restart } from "./Redux/Slice";
 
 function App() {
-  let [state, setState] = useState([
-    { id: 1, cross: false, zero: false },
-    { id: 2, cross: false, zero: false },
-    { id: 3, cross: false, zero: false },
-    { id: 4, cross: false, zero: false },
-    { id: 5, cross: false, zero: false },
-    { id: 6, cross: false, zero: false },
-    { id: 7, cross: false, zero: false },
-    { id: 8, cross: false, zero: false },
-    { id: 9, cross: false, zero: false },
-  ])
-  let [counter,setCounter] = useState(0)
-  let [win,setWin] = useState("")
-
-
-  function addPoint(id){
-    setState(
-      state.map(item => { 
-        if(item.id === id){
-          if (counter % 2 === 0 && !item.zero && !item.cross){
-            item.cross = true
-            setCounter(++counter)
-          } else if (counter % 2 !== 0 && !item.cross && !item.zero) {
-            item.zero = true
-            setCounter(++counter)
-          }
-        }
-        return item;
-      }));
-  }
-
-  function checkIfWon(){
-    const winComb = [
-      [0,1,2],
-      [3,4,5],
-      [6,7,8],
-      [0,3,6],
-      [1,4,7],
-      [2,5,8],
-      [0,4,8],
-      [2,4,6],
-    ]
-    for (let i = 0; i < winComb.length; i++){
-      let [a,b,c] = winComb[i];
-      if (state[a].cross && state[b].cross && state[c].cross){
-        setWin("X");
-        break;   
-      }
-      if (state[a].zero && state[b].zero && state[c].zero) {
-        setWin("O");
-        break;
-      }
-    }
-  }
+  const dispatch = useDispatch()
   
-  function restart(){
-    setState(state.map(item => {item.cross = false; item.zero = false; return item}))
-    setCounter(0);
-    setWin("")
-  }
-
+  let win = useSelector(state => state.tic.win)
+  let state = useSelector(state => state.tic.stateTic)
+  let counter = useSelector(state => state.tic.counter)
+ 
   
   return (
     <div>
       <div className="turn">Turn is: {counter % 2 !== 0 ? "O" : "X"}</div>
       <div className="box" >
         {
-          state.map(item => <BoxCeill key={item.id} cross={item.cross} zero={item.zero} id={item.id} addPoint={addPoint}/>)
+          state.map(item => <BoxCeill key={item.id} cross={item.cross} zero={item.zero} id={item.id} />)
         }
       </div>
-      <div className="btn_restart" onClick={restart}>Restart</div>
-      {win && <WinScrin restart={restart} win={win}/>}
-      {win || checkIfWon()}
+      <div className="btn_restart" onClick={() => dispatch(restart())}>Restart</div>
+      {win && <WinScrin  win={win}/>}
     </div>
   );
 }
